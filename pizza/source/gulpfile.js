@@ -37,33 +37,33 @@ gulp.task('serve', function() {
 gulp.task('concatCSS', function() {
 	return gulp.src(paths.styles)
 			   .pipe(concatCss('styles.css'))
-			   .pipe(gulp.dest('../dist/css/'));
+			   .pipe(gulp.dest('./dist/css/'));
 	});
 
 gulp.task('purifyCSS', ['concatCSS'], function() {
-	return gulp.src('../dist/css/styles.css')
+	return gulp.src('./dist/css/styles.css')
 			   .pipe(purify(['./pizza.html', './js/main.js']))
-			   .pipe(gulp.dest('../dist/css/'));
+			   .pipe(gulp.dest('./dist/css/'));
 	});
 
 gulp.task('stylesMin', ['purifyCSS'], function() {
-	gulp.src('../dist/css/styles.css')
+	gulp.src('./dist/css/styles.css')
 		.pipe(minifyCss())
 		.pipe(rename(function(path) { path.basename += '.min'; }))
-		.pipe(gulp.dest('../dist/css/'));
-	return del('../dist/css/styles.css', {force: true});
+		.pipe(gulp.dest('./dist/css/'));
+	return del('./dist/css/styles.css', {force: true});
 	});
 
 gulp.task('scripts', function() {
 	return gulp.src(paths.scripts)
 			   .pipe(uglify())
 			   .pipe(rename(function(path) { path.basename += '.min'; }))
-			   .pipe(gulp.dest('../dist/js/'));
+			   .pipe(gulp.dest('./dist/js/'));
 	});
 
 gulp.task('move', function() {
 	return gulp.src(['./images/*'], { base: './' })
-			   .pipe(gulp.dest('../dist/'));
+			   .pipe(gulp.dest('./dist/'));
 	});
 
 gulp.task('replace', function() {
@@ -72,11 +72,11 @@ gulp.task('replace', function() {
 			   		'css': '<link href="css/styles.min.css" rel="stylesheet">',
 			   		'js': '<script src="js/main.min.js"></script>'
 			   	}))
-			   .pipe(gulp.dest('../dist/'));
+			   .pipe(gulp.dest('./dist/'));
 	});
 
 gulp.task('delDist', function() {
-	return del('../dist/', {force: true});
+	return del('./dist/', {force: true});
 	});
 
 gulp.task('build', ['stylesMin', 'scripts', 'move', 'replace']);
