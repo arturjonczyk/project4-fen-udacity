@@ -443,7 +443,10 @@ var resizePizzas = function(size) {
 	changeSliderLabel(size);
 
 	// Iterates through pizza elements on the page and changes their widths
+	var randomPizzas = document.getElementsByClassName('randomPizzaContainer'),
+		randomLen = randomPizzas.length;
 	function changePizzaSizes(size) {
+		var newWidth;
 		switch (size) {
 			case "1":
 				newWidth = 25;
@@ -458,8 +461,7 @@ var resizePizzas = function(size) {
 				console.log("bug in size switcher");
 		}
 
-		var randomPizzas = document.getElementsByClassName('randomPizzaContainer');
-		for (var i = 0; i < randomPizzas.length; i++) {
+		for (var i = 0; i < randomLen; i++) {
 			randomPizzas[i].style.width = newWidth + '%';
 		}
 	}
@@ -508,6 +510,8 @@ function logAverageFrame(times) { // times is the array of User Timing measureme
 function updatePositions() {
 	frame++;
 	window.performance.mark("mark_start_frame");
+	//Check the scroll height from the top of our page and launch updatePosition fun.
+	scrollTop = window.scrollY / 1250;
 
 	requestAnimationFrame(function() {
 		for (var i = 0; i < numPizzas; i++) {
@@ -532,21 +536,17 @@ function updatePositions() {
 		logAverageFrame(timesToUpdatePosition);
 	}
 }
-// Initial positon of scroll.
-var scrollTop = 0;
-
-//Check the scroll height from the top of our page and launch updatePosition fun.
-function onScroll() {
-	scrollTop = window.scrollY / 1250;
-	updatePositions();
-}
 
 // every time scroll the page - onScroll fun is fired.
-window.addEventListener('scroll', onScroll);
+window.addEventListener('scroll', updatePositions);
+
+function calcPizzaNum() {
+	return Math.ceil(window.innerHeight / 256) * 8;
+}
 
 var movingPizzasGroup = document.querySelector("#movingPizzas1"), // div that grouping all the moving pizzas
 	movingPizzas, // all moving Pizzas elements
-	numPizzas = 32, // total number of moving Pizzas
+	numPizzas = calcPizzaNum(), // total number of moving Pizzas
 	cols = 8, // number of columns
 	s = 256; // height beatwin rows
 
