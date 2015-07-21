@@ -120,7 +120,7 @@ The folder structure for the project 4:
 
 ###Instruction for launching and runing Pizza Website:
 1. Go to **pizza/dist/** folder.
-2. Open the **pizza.html** file with your browser (must be moder browser, chrome or firefox)
+2. Open the **pizza.html** file in a modern web browser like Google Chrome or Firefox.
 
 ***
 
